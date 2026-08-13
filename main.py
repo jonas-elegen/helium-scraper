@@ -24,10 +24,10 @@ def log_to_sheets(left_p, right_p, left_t, right_t, left_v, right_v):
         print("-> Attempting to open Google Sheet by URL...")
         sheet = client.open_by_url(sheet_url).sheet1
 
-        # Generates the exact current time in California (handles PST/PDT automatically)
-        timestamp = datetime.now(ZoneInfo("America/Los_Angeles")).strftime("%Y-%m-%d %H:%M:%S")
+        # Generates the exact current time in California formatted as M/D/YYYY H:M:S
+        timestamp = datetime.now(ZoneInfo("America/Los_Angeles")).strftime("%-m/%-d/%Y %H:%M:%S")
         
-        sheet.append_row([timestamp, left_p, right_p, left_t, right_t, left_v, right_v])
+        sheet.append_row([timestamp, left_p, right_p, left_t, right_t, left_v, right_v], value_input_option='USER_ENTERED')
         print("[✓] Google Sheet updated successfully!")
     except gspread.exceptions.SpreadsheetNotFound:
         print("[X] ERROR: Could not find the Google Sheet. Check that the URL is correct and the service account has access!")
